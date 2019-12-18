@@ -2,8 +2,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 
-from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets("MNIST_data/", one_hot=True) # y labels are oh-encoded
+mnist = tf.keras.datasets.mnist
 
 n_train = mnist.train.num_examples # 55,000
 n_validation = mnist.validation.num_examples # 5000
