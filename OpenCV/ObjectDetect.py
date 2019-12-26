@@ -1,10 +1,14 @@
 import torchvision
+import torch
+cuda = torch.device('cuda')
 model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
 from PIL import  Image
 import cv2
 import matplotlib.pyplot as plt
 
 import torchvision.transforms as T
+
+
 
 model.eval()
 

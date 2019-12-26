@@ -17,3 +17,4 @@ with tf.Session() as sess:
 
 #close session
 sess.close()
+
