@@ -1,20 +1,14 @@
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 import tensorflow as tf
+from tensorflow.keras import layers
+import tensorflow_datasets    as tfds
 
-# build computational graph
-t1 = tf.placeholder(tf.int16)
-t2 = tf.placeholder(tf.int16)
+tfds.disable_progress_bar()
 
-addition = tf.add(t1,t2)
+(traing_data, test_data) = tfds.load('imdb_reviews/subwords8k', 
+                                     split = (tfds.Split.TRAIN, tfds.Split.TEST),
+                                     with_info = True, as_supervised = True)
 
-#initializa variable
-
-
-#create a session 
-with tf.Session() as sess:
-    sess.run(tf.global_variables_initializer())
-    print("Addition of t1 and t2 %i" %sess.run(addition,feed_dict={t1:2,t2:3}))
-
-
-#close session
-sess.close()
-
+encoder = info.features['text'].encoder
+encoder.subwords[:20]
