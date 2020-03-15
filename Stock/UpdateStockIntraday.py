@@ -7,7 +7,7 @@ import os
 import csv
 import json
 
-conn = psycopg2.connect(host="73.170.217.34",database="Trade", user="postgres", password="hGNIS@123PG")
+conn = psycopg2.connect(host="localhost",database="Trade", user="postgres", password="hGNIS@123PG")
 
 
 def insertCompany(conn):
@@ -57,7 +57,7 @@ def updateStockData(conn):
     companyList = [comp[0] for comp in companyList]
 
     company = np.array(companyList)
-    for symbol in company[:1]:
+    for symbol in company[1:]:
         start_time = time.time()
         
         dataURL = f"{URL}{function}&symbol={symbol}&apikey={apikey}%&interval=1min&outputsize={outputsize}&datatype={datatype}"
@@ -66,9 +66,9 @@ def updateStockData(conn):
         data =pd.read_json(json.dumps(download['Time Series (1min)'])).transpose().reset_index()
         data['symbol'] = symbol
         
-       #print(data.values.tolist())
+        #print(data.values.tolist())
         
-        sql = """INSERT INTO public.stockdailyIntra(
+        sql = """INSERT INTO public.stockdailyintra(
                      dateTime, open,  high, low, close, volume,ticker)
                     VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING ticker;"""
         try:
@@ -103,7 +103,7 @@ def updateStockDataDaily(conn):
        #print(data.values.tolist())
         
         sql = """INSERT INTO public.stockdaily(
-                     "Date", open,  high, low, close, volume,ticker)
+                     date, open,  high, low, close, volume,ticker)
                     VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING ticker;"""
         try:
             cur = conn.cursor()
